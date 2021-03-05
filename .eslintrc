@@ -1,0 +1,26 @@
+{
+  "extends": ["wesbos"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "import/no-unresolved": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "no-use-before-define": "off",
+    "func-names": "off",
+    "no-process-exit": "off",
+    "object-shorthand": "off",
+    "react-hooks/exhaustive-dep":"off",
+    "class-methods-use-this": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "printWidth": 120,
+        "semi": false,
+        "tabWidth": 2,
+        "endOfLine": "auto"
+      }
+    ]
+  }
+}
