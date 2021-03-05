@@ -1,5 +1,7 @@
-This is a [Next.js] project template with a editable, paginated  and sortable React Table, with cvs uploading using papaparse, and error handling.
+## React Table cvs Upload Template
 
+This is a [Next.js] project template with an editable, paginated and sortable React Table, featuring CVS uploading using papaparse, and error handling.
 
-If you like it, leave a star.
+- No styling cuz that's your job.
+- If you like it, leave a star. :)
 
