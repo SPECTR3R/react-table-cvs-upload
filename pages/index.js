@@ -12,11 +12,6 @@ export default function Home() {
 
   const reservationInputFields = [
     {
-      label: 'Tipo de habitación',
-      name: 'rooms.name',
-      required: true,
-    },
-    {
       label: 'Fecha de llegada',
       name: 'arrivalDate',
     },
@@ -58,6 +53,7 @@ export default function Home() {
     },
   ]
 
+  console.log(data)
   return (
     <>
       {<CSVUploader setColumns={setColumns} setData={setData} error={error} setError={setError} />}
@@ -67,9 +63,10 @@ export default function Home() {
       {!_.isEmpty(data) && (
         <div>
           <ReservationUploadForm
-            reservationData={data}
+            reservationsData={data}
             inputFields={reservationInputFields}
             selectableOptions={columns.map((column) => column.Header)}
+            columns={columns}
           />
         </div>
       )}
