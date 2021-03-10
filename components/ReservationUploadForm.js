@@ -2,68 +2,67 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import DropdownSelectGenerator from './DropdownSelectGenerator'
+import { getDataCache, setDataToCache } from './utils'
 
 const ReservationUploadForm = ({ selectableOptions, reservationsData, columns }) => {
   const [selectedOptions, setSelectedOptions] = useState({})
   const [reservationNameFields, setReservationNameFields] = useState([])
+  const [isNameSeparated, setIsNameSeparated] = useState('false')
 
-  // useEffect(() => {
-  //   if (!_.isEmpty(selectedOptions)) {
-  //     const cache = localStorage.getItem('Reservation_Data')
-  //     setSelectedOptions(cache)
-  //   }
-  // }, [selectedOptions])
+  useEffect(() => {
+    if (!_.isEmpty(selectedOptions)) return
+    const cache = getDataCache('DATA_CACHE')
+    console.log(cache, 'onta cache')
+    const { inputValues } = cache.data
+    console.log(inputValues, 'input')
+    setSelectedOptions(inputValues.selectableOptions)
+    // }
+  }, [selectedOptions])
 
   const handleSelectChange = (e) => {
     const { name, value } = e.target
     setSelectedOptions((prevInputData) => ({ ...prevInputData, [name]: value }))
   }
 
-  console.log(reservationsData, 'la reservació si sin n')
-
-  const basariReservationGenerator = (reservationsArr, values) => {
-    const result = reservationsArr.map((res, idx) => {
-      const reservation = {}
-
-      reservation.adultsCount = res[values]
-      return reservation
-    })
-    console.log(result)
-    return result
-  }
-
   const handleFormSubmit = (e) => {
     e.preventDefault()
-    console.table(reservationsData)
-    const result = basariReservationGenerator(reservationsData, selectedOptions)
-    console.table(result)
+    // console.log(reservationsData, 'holi')
+    // console.log(selectedOptions, 'holi')
+
+    setDataToCache({ selectedOptions })
+    // console.log(columns)
+
+    // const result = basariReservationGenerator(reservationsData, selectedOptions)
+    // console.table(result)
   }
 
   const inputFields = [
-    {
-      label: 'Tipo de habitación',
-      name: 'roomType.name',
-    },
+    // {
+    //   label: 'Tipo de habitación',
+    //   name: 'roomType.name',
+    //   required: true,
+    // },
     {
       label: 'Fecha de llegada',
-      name: 'arrivalDate',
+      name: 'arrivalDate ',
+      required: true,
     },
     {
       label: 'Fecha de salida',
       name: 'departureDate',
+      required: true,
     },
     {
       label: 'Número de adultos',
       name: 'adultsCount',
+      required: true,
     },
     {
       label: 'Número de niños',
       name: 'childrenCount',
+      required: true,
     },
-    {
-      label: 'Acompañantes',
-      name: 'occupants',
-    },
+
     {
       label: 'Origen de la reservación',
       name: 'createdBy',
@@ -71,6 +70,7 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData, columns })
     {
       label: 'Número de la reservación',
       name: 'reservationNumber',
+      required: true,
     },
     {
       label: 'Tipo de reservación',
@@ -78,14 +78,16 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData, columns })
     },
   ]
 
-  const separateNameInputFields = [
+  const separatedNameInputFields = [
     {
       label: 'Nombres',
       name: 'firstName',
+      required: true,
     },
     {
       label: 'Apellido',
       name: 'lastName',
+      required: true,
     },
   ]
 
@@ -110,35 +112,31 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData, columns })
             handleSelectChange={handleSelectChange}
           />
         ))}
-        <div style={{ display: 'inline - block' }} value={reservationNameFields ? 'true' : 'false'}>
-          <label htmlFor="name">
-            Nombre y apellido por separado
-            <input
-              type="radio"
-              onChange={() => setReservationNameFields(separateNameInputFields)}
-              name="reservationNameFields"
-            />
-          </label>
-          <label htmlFor="lastName">
-            Nombre y apellido juntos
-            <input
-              type="radio"
-              onChange={() => setReservationNameFields(connectedNameInputFields)}
-              name="reservationNameFields"
-            />
-          </label>
-          {reservationNameFields.map(({ name, label }, idx) => (
-            <DropdownSelectGenerator
-              key={`${name}Select${idx}`}
-              optionsArr={selectableOptions}
-              label={label}
-              name={name}
-              selectedOption={selectedOptions[name]}
-              handleSelectChange={handleSelectChange}
-            />
-          ))}
+        <div
+          onChange={(e) => {
+            if (e.target.value === 'true') {
+              setIsNameSeparated('true')
+              return setReservationNameFields(separatedNameInputFields)
+            }
+            setIsNameSeparated('false')
+            return setReservationNameFields(connectedNameInputFields)
+          }}
+        >
+          <input type="radio" value="true" name="gender" /> Nombre y apellido por separado
+          <input type="radio" value="false" name="gender" /> Nombre y apellido junto
         </div>
-
+        {reservationNameFields.map(({ name, label }, idx) => (
+          <DropdownSelectGenerator
+            key={`${name}Select${idx}`}
+            optionsArr={selectableOptions}
+            label={label}
+            name={name}
+            selectedOption={selectedOptions[name]}
+            handleSelectChange={handleSelectChange}
+          />
+        ))}
+        <br />
+        <br />
         <button type="submit">Log data</button>
       </form>
     </>

@@ -3,25 +3,22 @@ export default function DropdownSelectGenerator({
   label,
   name,
   handleSelectChange,
-  selectedOption,
+  selectedOption = '',
   required,
 }) {
-  // const [error, setError] = useState('')
-
   return (
     <>
       <label htmlFor={name}>{label}</label>
       <select name={name} value={selectedOption} onChange={handleSelectChange} required={required}>
-        <option hidden disabled selected={!selectedOption} value="">
+        <option hidden disabled value="">
           Selecione la columna a Relacionar
         </option>
         {optionsArr.map((optionsValue, idx) => (
-          <option key={`name${idx}`} selected={selectedOption === optionsValue} value={optionsValue}>
+          <option key={`name${idx}`} value={optionsValue}>
             {optionsValue}
           </option>
         ))}
       </select>
-      {/* <div>{error}</div> */}
     </>
   )
 }

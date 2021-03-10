@@ -1,19 +1,21 @@
 import { useRef, useState } from 'react'
 import { CSVReader } from 'react-papaparse'
-import _ from 'lodash'
 
 const CSVUploader = ({ setColumns, setData, error, setError }) => {
   const clearButtonRef = useRef(null)
+
   const [isFileOn, setIsFileOn] = useState(false)
 
   const handleOnDrop = (fileData, { type }) => {
     try {
       setIsFileOn(false)
+
       setError(null)
-      console.log(type)
+
       if (type !== 'text/csv') {
         throw new Error('Archivo invalido')
       }
+
       const headers = fileData.shift().data.map((elem, idx) => ({ Header: elem, accessor: `${idx}` }))
       const values = fileData.map((rowElem) => ({ ...rowElem.data })).filter((elem) => Object.keys(elem).length > 1)
       setColumns(headers)
@@ -42,14 +44,10 @@ const CSVUploader = ({ setColumns, setData, error, setError }) => {
 
   return (
     <div>
-      {!isFileOn && (
-        <CSVReader ref={clearButtonRef} onDrop={handleOnDrop} onError={handleOnError}>
-          <span>Cliquea aquí o arrastra tu archivo .CVS a esta región para subir.</span>
-        </CSVReader>
-      )}
-
+      <CSVReader ref={clearButtonRef} onDrop={handleOnDrop} onError={handleOnError}>
+        <span>Cliquea aquí o arrastra tu archivo .CVS a esta región para subir.</span>
+      </CSVReader>
       {error?.message && <div>Error: {error.message}</div>}
-
       <button
         type="button"
         onClick={handleRemoveFile}
@@ -65,10 +63,7 @@ const CSVUploader = ({ setColumns, setData, error, setError }) => {
 export default CSVUploader
 
 function handleElementVisibility(...rest) {
-  console.log(rest)
   const isAnyflagTruthy = rest.some((flag) => !!flag)
-
   const ret = isAnyflagTruthy ? 'visible' : 'hidden'
-
   return ret
 }
