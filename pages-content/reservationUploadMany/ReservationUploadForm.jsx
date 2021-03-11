@@ -3,7 +3,7 @@ import DropdownSelectGenerator from '../../components/DropdownSelectGenerator'
 import { getDataCache, setDataToCache } from '../../libs/utils'
 import { inputFields, separatedNameInputFields, connectedNameInputFields } from './reservationUploadFormConstants'
 
-const ReservationUploadForm = ({ reservationCVSheaders, reservationCVSData }) => {
+const ReservationUploadForm = ({ reservationCSVheaders, reservationCSVData }) => {
   const [selectedOptions, setSelectedOptions] = useState({})
   const [reservationNameFields, setReservationNameFields] = useState([...separatedNameInputFields, ...inputFields])
   const [isNameSeparated, setIsNameSeparated] = useState('true')
@@ -38,9 +38,10 @@ const ReservationUploadForm = ({ reservationCVSheaders, reservationCVSData }) =>
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
-
+    const result = reservationCSVData.map((reservation, idx) => ([] = reservation[idx]))
+    console.log(result)
     ///  crear fcn que reciba reservation data
-    console.log('selected', selectedOptions, reservationCVSheaders, reservationCVSData)
+    // console.log('selected', selectedOptions, reservationCSVheaders, reservationCSVData)
   }
 
   return (
@@ -67,7 +68,7 @@ const ReservationUploadForm = ({ reservationCVSheaders, reservationCVSData }) =>
         {reservationNameFields.map(({ label, name, required }, idx) => (
           <DropdownSelectGenerator
             key={`${name}Select${idx}`}
-            optionsArr={reservationCVSheaders.map((header) => header.Header)}
+            optionsArr={reservationCSVheaders.map((header) => header.Header)}
             label={label}
             name={name}
             selectedOption={selectedOptions?.[name] || ''}

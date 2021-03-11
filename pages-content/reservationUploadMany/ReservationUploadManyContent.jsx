@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import _ from 'lodash'
-import CSVUploader from '../../components/table/CVSUploader'
+import CSVUploader from '../../components/table/CSVUploader'
 import EditableTable from '../../components/table/EditableTable'
 
 import ReservationUploadForm from './ReservationUploadForm'
@@ -18,7 +18,7 @@ export default function ReservationUploadManyContent() {
       )}
       {!_.isEmpty(data) && (
         <div>
-          <ReservationUploadForm reservationCVSData={data} reservationCVSheaders={columns} />
+          <ReservationUploadForm reservationCSVData={data} reservationCSVheaders={columns} />
         </div>
       )}
     </>
