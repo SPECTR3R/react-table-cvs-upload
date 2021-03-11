@@ -5,7 +5,7 @@ import EditableTable from '../components/table/EditableTable'
 
 import ReservationUploadForm from '../components/ReservationUploadForm'
 
-export default function Home() {
+export default function ReservationUploadManyContent() {
   const [columns, setColumns] = useState(null)
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
