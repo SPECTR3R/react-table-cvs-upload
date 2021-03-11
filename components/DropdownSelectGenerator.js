@@ -7,7 +7,7 @@ export default function DropdownSelectGenerator({
   required,
 }) {
   return (
-    <>
+    <fieldset>
       <br />
       <label htmlFor={name}>{label}</label>
       <select name={name} value={selectedOption} onChange={handleSelectChange} required={required}>
@@ -21,6 +21,6 @@ export default function DropdownSelectGenerator({
         ))}
       </select>
       <br />
-    </>
+    </fieldset>
   )
 }
