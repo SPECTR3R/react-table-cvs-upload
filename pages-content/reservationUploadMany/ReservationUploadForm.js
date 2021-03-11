@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react'
-import DropdownSelectGenerator from './DropdownSelectGenerator'
-import { getDataCache, setDataToCache } from './utils'
-import {
-  inputFields,
-  separatedNameInputFields,
-  connectedNameInputFields,
-} from '../pages-content/reservations/reservationUploadFormConstants'
+import DropdownSelectGenerator from '../../components/DropdownSelectGenerator'
+import { getDataCache, setDataToCache } from '../../components/utils'
+import { inputFields, separatedNameInputFields, connectedNameInputFields } from './reservationUploadFormConstants'
 
 const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
   const [selectedOptions, setSelectedOptions] = useState({})

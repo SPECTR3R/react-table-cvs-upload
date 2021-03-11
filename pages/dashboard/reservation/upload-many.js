@@ -1,4 +1,4 @@
-import ReservationUploadForm from '../../../pages-content/reservations/ReservationUploadManyContent'
+import ReservationUploadForm from '../../../pages-content/reservationUploadMany/ReservationUploadManyContent'
 
 const ReservationUploadManyPage = () => <ReservationUploadForm />
 

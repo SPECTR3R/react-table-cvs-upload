@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import _ from 'lodash'
-import CSVUploader from '../components/table/CVSUploader'
-import EditableTable from '../components/table/EditableTable'
+import CSVUploader from '../../components/table/CVSUploader'
+import EditableTable from '../../components/table/EditableTable'
 
-import ReservationUploadForm from '../components/ReservationUploadForm'
+import ReservationUploadForm from './ReservationUploadForm'
 
 export default function ReservationUploadManyContent() {
   const [columns, setColumns] = useState(null)
