@@ -16,6 +16,8 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
     if (_.isEmpty(cacheData)) return
     setSelectedOptions((prev) => {
       const appendOtions = { ...cacheData, ...prev }
+      delete appendOtions.firstName
+      delete appendOtions.lastName
       return appendOtions
     })
   }, [selectedOptions])
@@ -127,7 +129,7 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
         </div>
         {reservationNameFields.map(({ name, label }, idx) => (
           <DropdownSelectGenerator
-            key={`${name}Select${idx}`}
+            key="Select"
             optionsArr={selectableOptions}
             label={label}
             name={name}
@@ -135,8 +137,7 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
             handleSelectChange={handleSelectChange}
           />
         ))}
-        <br />
-        <br />
+
         <button type="submit">Log data</button>
       </form>
     </>

@@ -8,6 +8,7 @@ export default function DropdownSelectGenerator({
 }) {
   return (
     <>
+      <br />
       <label htmlFor={name}>{label}</label>
       <select name={name} value={selectedOption} onChange={handleSelectChange} required={required}>
         <option hidden disabled value="">
@@ -19,6 +20,7 @@ export default function DropdownSelectGenerator({
           </option>
         ))}
       </select>
+      <br />
     </>
   )
 }
