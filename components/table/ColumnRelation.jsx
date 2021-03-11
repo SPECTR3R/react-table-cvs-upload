@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ColumnRelation = ({ columns,  }) => (
+const ColumnRelation = ({ columns }) => (
   <div>
     <select placeholder="Select option">
       {[...Array(columns.length).keys()].map((key) => (

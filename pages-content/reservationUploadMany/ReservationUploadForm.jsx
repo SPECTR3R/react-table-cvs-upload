@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import DropdownSelectGenerator from '../../components/DropdownSelectGenerator'
-import { getDataCache, setDataToCache } from '../../components/utils'
+import { getDataCache, setDataToCache } from '../../libs/utils'
 import { inputFields, separatedNameInputFields, connectedNameInputFields } from './reservationUploadFormConstants'
 
 const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
@@ -68,7 +68,7 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
             optionsArr={selectableOptions}
             label={label}
             name={name}
-            selectedOption={selectedOptions[name]}
+            selectedOption={selectedOptions?.[name] || ''}
             required={required}
             handleSelectChange={handleSelectChange}
           />

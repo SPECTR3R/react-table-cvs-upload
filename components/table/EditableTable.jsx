@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTable, useSortBy, usePagination } from 'react-table'
-import EditableCell from './EditableCell.js'
+import EditableCell from './EditableCell'
 
 // Be sure to pass our updateMyData and the skipPageReset option
 function Table({ columns, data, updateMyData, skipPageReset }) {
