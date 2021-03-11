@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import _ from 'lodash'
 import CSVUploader from '../components/table/CVSUploader'
 import EditableTable from '../components/table/EditableTable'

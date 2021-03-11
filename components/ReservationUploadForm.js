@@ -4,7 +4,7 @@ import _ from 'lodash'
 import DropdownSelectGenerator from './DropdownSelectGenerator'
 import { getDataCache, setDataToCache } from './utils'
 
-const ReservationUploadForm = ({ selectableOptions, reservationsData, columns }) => {
+const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
   const [selectedOptions, setSelectedOptions] = useState({})
   const [reservationNameFields, setReservationNameFields] = useState([])
   const [isNameSeparated, setIsNameSeparated] = useState('false')
@@ -12,11 +12,12 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData, columns })
   useEffect(() => {
     if (!_.isEmpty(selectedOptions)) return
     const cache = getDataCache('DATA_CACHE')
-    console.log(cache, 'onta cache')
-    const { inputValues } = cache.data
-    console.log(inputValues, 'input')
-    setSelectedOptions(inputValues.selectableOptions)
-    // }
+    const cacheData = cache?.data?.inputValues?.selectedOptions
+    if (_.isEmpty(cacheData)) return
+    setSelectedOptions((prev) => {
+      const appendOtions = { ...cacheData, ...prev }
+      return appendOtions
+    })
   }, [selectedOptions])
 
   const handleSelectChange = (e) => {
@@ -28,10 +29,9 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData, columns })
     e.preventDefault()
     // console.log(reservationsData, 'holi')
     // console.log(selectedOptions, 'holi')
-
     setDataToCache({ selectedOptions })
+    console.log('selected', selectedOptions)
     // console.log(columns)
-
     // const result = basariReservationGenerator(reservationsData, selectedOptions)
     // console.table(result)
   }
