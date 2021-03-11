@@ -18,11 +18,7 @@ export default function ReservationUploadManyContent() {
       )}
       {!_.isEmpty(data) && (
         <div>
-          <ReservationUploadForm
-            reservationsData={data}
-            selectableOptions={columns.map((column) => column.Header)}
-            columns={columns}
-          />
+          <ReservationUploadForm reservationCVSData={data} reservationCVSheaders={columns} />
         </div>
       )}
     </>

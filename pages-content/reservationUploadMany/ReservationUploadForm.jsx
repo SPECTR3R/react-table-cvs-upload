@@ -3,19 +3,21 @@ import DropdownSelectGenerator from '../../components/DropdownSelectGenerator'
 import { getDataCache, setDataToCache } from '../../libs/utils'
 import { inputFields, separatedNameInputFields, connectedNameInputFields } from './reservationUploadFormConstants'
 
-const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
+const ReservationUploadForm = ({ reservationCVSheaders, reservationCVSData }) => {
   const [selectedOptions, setSelectedOptions] = useState({})
   const [reservationNameFields, setReservationNameFields] = useState([...separatedNameInputFields, ...inputFields])
   const [isNameSeparated, setIsNameSeparated] = useState('true')
 
   useEffect(() => {
     const cache = getDataCache('DATA_CACHE')
-    const cachedSelectedOptions = cache?.data?.inputValues?.selectedOptions
-    const cachedIsNameSeparated = cache?.data?.inputValues?.isNameSeparated
-    console.log(cachedSelectedOptions, cachedIsNameSeparated)
+    const cachedSelectedOptions = cache?.data?.inputValues?.selectedOptions ?? {}
+    const cachedIsNameSeparated = cache?.data?.inputValues?.isNameSeparated ?? 'true'
     setSelectedOptions(cachedSelectedOptions)
     setIsNameSeparated(cachedIsNameSeparated)
-  }, [setSelectedOptions, setIsNameSeparated])
+
+    if (cachedIsNameSeparated === 'true') setReservationNameFields([...separatedNameInputFields, ...inputFields])
+    else setReservationNameFields([...connectedNameInputFields, ...inputFields])
+  }, [setSelectedOptions, setIsNameSeparated, setReservationNameFields])
 
   const handleSelectChange = (e) => {
     const { name, value } = e.target
@@ -27,7 +29,6 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
     if (e.target.value === 'true') {
       setIsNameSeparated('true')
       setReservationNameFields([...separatedNameInputFields, ...inputFields])
-
       return setDataToCache({ selectedOptions, isNameSeparated: 'true' })
     }
     setIsNameSeparated('false')
@@ -38,7 +39,8 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault()
 
-    console.log('selected', selectedOptions)
+    ///  crear fcn que reciba reservation data
+    console.log('selected', selectedOptions, reservationCVSheaders, reservationCVSData)
   }
 
   return (
@@ -65,7 +67,7 @@ const ReservationUploadForm = ({ selectableOptions, reservationsData }) => {
         {reservationNameFields.map(({ label, name, required }, idx) => (
           <DropdownSelectGenerator
             key={`${name}Select${idx}`}
-            optionsArr={selectableOptions}
+            optionsArr={reservationCVSheaders.map((header) => header.Header)}
             label={label}
             name={name}
             selectedOption={selectedOptions?.[name] || ''}
