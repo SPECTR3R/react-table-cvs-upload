@@ -18,7 +18,7 @@ export default function ReservationUploadManyContent() {
       )}
       {!_.isEmpty(data) && (
         <div>
-          <ReservationUploadForm reservationCSVData={data} reservationCSVheaders={columns} />
+          <ReservationUploadForm reservationCSVData={data} reservationCSVHeaders={columns} />
         </div>
       )}
     </>

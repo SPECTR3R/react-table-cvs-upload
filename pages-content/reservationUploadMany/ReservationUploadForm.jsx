@@ -3,7 +3,7 @@ import DropdownSelectGenerator from '../../components/DropdownSelectGenerator'
 import { getDataCache, setDataToCache } from '../../libs/utils'
 import { inputFields, separatedNameInputFields, connectedNameInputFields } from './reservationUploadFormConstants'
 
-const ReservationUploadForm = ({ reservationCSVheaders, reservationCSVData }) => {
+const ReservationUploadForm = ({ reservationCSVHeaders, reservationCSVData }) => {
   const [selectedOptions, setSelectedOptions] = useState({})
   const [reservationNameFields, setReservationNameFields] = useState([...separatedNameInputFields, ...inputFields])
   const [isNameSeparated, setIsNameSeparated] = useState('true')
@@ -38,10 +38,23 @@ const ReservationUploadForm = ({ reservationCSVheaders, reservationCSVData }) =>
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
-    const result = reservationCSVData.map((reservation, idx) => ([] = reservation[idx]))
-    console.log(result)
-    ///  crear fcn que reciba reservation data
-    // console.log('selected', selectedOptions, reservationCSVheaders, reservationCSVData)
+
+    // const Headers = reservationCSVHeaders.map(({ Header }) => Header)
+    // console.log(reservationCSVData, 'antes del parseo')
+    // const reservationsData = reservationCSVData.map((reservation, idx) => {
+    //   const reservationObj = {}
+
+    //   return reservationObj[Headers]
+    // })
+
+    // console.log(Headers)
+
+    // console.log(JSON.stringify(reservationCSVData))
+    console.log(JSON.stringify(reservationCSVHeaders))
+    console.log(JSON.stringify(selectedOptions))
+
+    ///  crear fcn que reciba rl,l, lknkkkeservation data
+    // console.log('selected', se,.lectedOptions, reservationCSVHeaders, reservationCSVData)
   }
 
   return (
@@ -68,7 +81,7 @@ const ReservationUploadForm = ({ reservationCSVheaders, reservationCSVData }) =>
         {reservationNameFields.map(({ label, name, required }, idx) => (
           <DropdownSelectGenerator
             key={`${name}Select${idx}`}
-            optionsArr={reservationCSVheaders.map((header) => header.Header)}
+            optionsArr={reservationCSVHeaders.map((header) => header.Header)}
             label={label}
             name={name}
             selectedOption={selectedOptions?.[name] || ''}
