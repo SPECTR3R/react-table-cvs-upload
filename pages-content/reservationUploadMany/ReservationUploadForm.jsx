@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import DropdownSelectGenerator from '../../components/DropdownSelectGenerator'
 import { getDataCache, setDataToCache } from '../../libs/cacheService'
 import { inputFields, separatedNameInputFields, connectedNameInputFields } from './reservationUploadFormConstants'
-import {processCSVReservationObj} from '../js.js'
+import { processCSVReservationObj } from '../../js.js'
 
 const ReservationUploadForm = ({ reservationCSVHeaders, reservationCSVData }) => {
   const [selectedOptions, setSelectedOptions] = useState({})
@@ -40,6 +40,11 @@ const ReservationUploadForm = ({ reservationCSVHeaders, reservationCSVData }) =>
   const handleFormSubmit = (e) => {
     e.preventDefault()
 
+    const finalOutput = reservationCSVData.map((singleRes) =>
+      processCSVReservationObj(singleRes, reservationCSVHeaders, selectedOptions, isNameSeparated)
+    )
+    console.log(finalOutput)
+
     // const Headers = reservationCSVHeaders.map(({ Header }) => Header)
     // console.log(reservationCSVData, 'antes del parseo')
     // const reservationsData = reservationCSVData.map((reservation, idx) => {
@@ -50,9 +55,9 @@ const ReservationUploadForm = ({ reservationCSVHeaders, reservationCSVData }) =>
 
     // console.log(Headers)
 
-    console.log(JSON.stringify(reservationCSVData))
-    console.log(JSON.stringify(reservationCSVHeaders))
-    console.log(JSON.stringify(selectedOptions))
+    // console.log(JSON.stringify(reservationCSVData))
+    // console.log(JSON.stringify(reservationCSVHeaders))
+    // console.log(JSON.stringify(selectedOptions))
 
     ///  crear fcn que reciba rl,l, lknkkkeservation data
     // console.log('selected', se,.lectedOptions, reservationCSVHeaders, reservationCSVData)

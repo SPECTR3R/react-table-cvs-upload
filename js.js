@@ -1,4 +1,3 @@
-
 // const reservations = [
 //   {
 //     0: 'SUDN',
@@ -164,45 +163,35 @@
 //   reservationType: 'Tipo de reservaci�n',
 // }
 
-const finalOutput = reservations.map((singleRes) => processCSVReservationObj(singleRes, columnHeaders, colRel))
-console.log(finalOutput)
-export function processCSVReservationObj(reservation, columnHeaders, columnRelationship) {
+export function processCSVReservationObj(reservation, columnHeaders, columnRelationship, isNameSeparated) {
   const output1 = columnHeaders.reduce((acc, { Header, accessor }) => {
     // console.log(Header, singleRes[accessor], acc)
     acc[Header] = reservation[accessor]
     return acc
   }, {})
 
-  const isNameSeparated = false
-
   const mapped = Object.keys(columnRelationship).reduce((acc, key) => {
-    acc[key] = output1[columnRelationship[key]]
-
-    const reservation ={}
-
-    if (!isNameSeparated && key === 'firstName') {
+    if (isNameSeparated === 'false' && key === 'firstName') {
       const firstNameAndLastName = output1[columnRelationship[key]].split(/,|, /)
-     acc.firstName = firstNameAndLastName[1]
-      acc.lastName = firstNameAndLastName[0]
-
-      reservation.firstName = acc.firstName
-      reservation.lastName= acc.lastName
-    }
-
-    if (key === 'childrenCount') {
-      acc.childrenCount = parseInt(output1[columnRelationship[key]])
-    }
-
-    if (key === 'adultsCount') {
-      acc.adultsCount = parseInt(output1[columnRelationship[key]])
-    }
-
-    if (key=== 'arrivalDate'){
-     reservation.arrivalDate = acc.arrivalDate
-    }
-
-     if (key=== 'departureDate'){
-      reservation.departureDate = acc.departureDayte
+      console.log(firstNameAndLastName, 'debugger')
+      const [firstName, lastName] = firstNameAndLastName
+      acc.occupants = [{ firstName, lastName }]
+      console.log(isNameSeparated, 'se separa el nombre?')
+      console.log(acc.occupants)
+    } else if (isNameSeparated && key === 'firstName') {
+      const firstName = output1[columnRelationship[key]]
+      acc.occupants = [{ firstName, ...acc?.occupants?.[0] }]
+    } else if (isNameSeparated && key === 'lastName') {
+      const lastName = output1[columnRelationship[key]]
+      acc.occupants = [{ lastName, ...acc?.occupants?.[0] }]
+    } else if (key === 'childrenCount' || key === 'adultsCount') {
+      acc[key] = parseInt(output1[columnRelationship[key]])
+    } else if (key === 'arrivalDate') {
+      acc[key] = output1[columnRelationship[key]].replaceAll('/', '-')
+    } else if (key === 'departureDate') {
+      acc[key] = output1[columnRelationship[key]].replaceAll('/', '-')
+    } else {
+      acc[key] = output1[columnRelationship[key]]
     }
 
     return acc
