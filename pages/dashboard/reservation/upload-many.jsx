@@ -1,5 +1,5 @@
-import ReservationUploadForm from '../../../pages-content/reservationUploadMany/ReservationUploadManyContent'
+import ReservationUploadManyContent from '../../../pages-content/reservationUploadMany/ReservationUploadManyContent'
 
-const ReservationUploadManyPage = () => <ReservationUploadForm />
+const ReservationUploadManyPage = () => <ReservationUploadManyContent />
 
 export default ReservationUploadManyPage
