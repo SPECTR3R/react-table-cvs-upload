@@ -49,7 +49,7 @@ const ReservationUploadForm = ({ reservationCSVHeaders, reservationCSVData }) =>
 
     // console.log(Headers)
 
-    // console.log(JSON.stringify(reservationCSVData))
+    console.log(JSON.stringify(reservationCSVData))
     console.log(JSON.stringify(reservationCSVHeaders))
     console.log(JSON.stringify(selectedOptions))
 
