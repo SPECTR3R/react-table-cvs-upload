@@ -45,7 +45,7 @@ const CSVUploader = ({ setColumns, setData, error, setError }) => {
   return (
     <div>
       <CSVReader ref={clearButtonRef} onDrop={handleOnDrop} onError={handleOnError}>
-        <span>Cliquea aquí o arrastra tu archivo .CVS a esta región para subir.</span>
+        <span>Cliquea aquí o arrastra tu archivo .CSV a esta región para subir.</span>
       </CSVReader>
       {error?.message && <div>Error: {error.message}</div>}
       <button

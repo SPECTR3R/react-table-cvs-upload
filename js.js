@@ -163,7 +163,7 @@
 //   reservationType: 'Tipo de reservaci�n',
 // }
 
-export function processCSVReservationObj(reservation, columnHeaders, columnRelationship, isNameSeparated) {
+export function processCSVReservationObj(reservation, columnHeaders, columnRelationship, firstNameAndLastNameOrder) {
   const output1 = columnHeaders.reduce((acc, { Header, accessor }) => {
     // console.log(Header, singleRes[accessor], acc)
     acc[Header] = reservation[accessor]
@@ -171,17 +171,26 @@ export function processCSVReservationObj(reservation, columnHeaders, columnRelat
   }, {})
 
   const mapped = Object.keys(columnRelationship).reduce((acc, key) => {
-    if (isNameSeparated === 'false' && key === 'firstName') {
+    if (firstNameAndLastNameOrder === 'firstNameConnectedByAComma' && key === 'firstName') {
       const firstNameAndLastName = output1[columnRelationship[key]].split(/,|, /)
-      console.log(firstNameAndLastName, 'debugger')
+      const [lastName, firstName] = firstNameAndLastName
+      acc.occupants = [{ firstName, lastName }]
+    } else if (firstNameAndLastNameOrder === 'lastNameConnectedByAComma' && key === 'firstName') {
+      const firstNameAndLastName = output1[columnRelationship[key]].split(/,|, /)
       const [firstName, lastName] = firstNameAndLastName
       acc.occupants = [{ firstName, lastName }]
-      console.log(isNameSeparated, 'se separa el nombre?')
-      console.log(acc.occupants)
-    } else if (isNameSeparated && key === 'firstName') {
+    } else if (firstNameAndLastNameOrder === 'firstNameConnectedByASpace' && key === 'firstName') {
+      const firstNameAndLastName = output1[columnRelationship[key]].split(/ |, /)
+      const [lastName, firstName] = firstNameAndLastName
+      acc.occupants = [{ firstName, lastName }]
+    } else if (firstNameAndLastNameOrder === 'lastNameConnectedByASpace' && key === 'firstName') {
+      const firstNameAndLastName = output1[columnRelationship[key]].split(/ |, /)
+      const [firstName, lastName] = firstNameAndLastName
+      acc.occupants = [{ firstName, lastName }]
+    } else if (firstNameAndLastNameOrder === 'firstNameAndLastNameSeparated' && key === 'firstName') {
       const firstName = output1[columnRelationship[key]]
       acc.occupants = [{ firstName, ...acc?.occupants?.[0] }]
-    } else if (isNameSeparated && key === 'lastName') {
+    } else if (firstNameAndLastNameOrder && key === 'lastName') {
       const lastName = output1[columnRelationship[key]]
       acc.occupants = [{ lastName, ...acc?.occupants?.[0] }]
     } else if (key === 'childrenCount' || key === 'adultsCount') {
